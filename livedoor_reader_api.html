@@ -1,0 +1,159 @@
+<!DOCTYPE HTML>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <title>Livedoor Reader API Access</title>
+  <script src="http://reader.livedoor.com/js/ldr-connect.js"></script>
+  <script data-main="js/main.js" src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.4/require.min.js"></script>
+  <link href="//netdna.bootstrapcdn.com/twitter-bootstrap/2.3.1/css/bootstrap-combined.min.css" rel="stylesheet">
+  <style type="text/css">
+body {
+  color : #1C1C1C;
+  line-height: 150%;
+}
+.parameters {
+  display : none;
+}
+article {
+  border : 1px solid #5DAC81;
+  margin-bottom : 10px;
+  padding : 0 10px;
+}
+
+div.result pre {
+  width : 95%;
+  font-size: small;
+  line-height: 120%;
+}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <form id="base">
+      <input type="button" value="authorize" id="authorize_button" class="btn"/>
+      <input type="button" value="clear token" id="clear_button" class="btn"/>
+    </form>
+    <article class="api">
+      <h3>/api/subs</h3>
+      <p>登録しているフィードを取得する。</p>
+      <div class="parameters">
+  [
+    {"name" : "unread", "value" : 1 , "data_type" : "number", "description" : "未読の場合、1。"},
+    {"name" : "from_id", "value" : 0, "data_type" : "number"},
+    {"name" : "limit", "value" : 10,  "data_type" : "number"}
+  ]
+      </div>
+    </article>
+    <article class="api">
+      <h3>/api/unread</h3>
+      <p>フィードの未読の記事を取得する。</p>
+      <div class="parameters">
+    [
+      {"name" : "subscribe_id"},
+      {"name" : "offset", "data_type" : "number(optional)"},
+      {"name" : "limit", "data_type" : "number(optional)"}
+    ]
+      </div>
+    </article>
+    <article class="api">
+      <h3>/api/all</h3>
+      <p>フィードから記事を取得する。</p>
+      <div class="parameters">
+    [
+      {"name" : "subscribe_id", "data_type" : "number"},
+      {"name" : "offset", "data_type" : "number"},
+      {"name" : "limit", "data_type" : "number"}
+    ]
+      </div>
+    </article>
+    <article class="api">
+      <h3>/api/feed/unsubscribe</h3>
+      <p>登録しているフィードの登録を解除する。</p>
+      <div class="parameters">
+    [
+      {"name" : "subscribe_id", "data_type" : "number"}
+    ]
+      </div>
+    </article>
+    <article class="api">
+      <h3>/api/touch_all</h3>
+      <p>登録しているフィードを既読化する。</p>
+      <div class="parameters">
+    [
+      {"name" : "subscribe_id", "data_type" : "number"}
+    ]
+      </div>
+    </article>
+    <article class="api">
+      <h3>/api/feed/set_rate</h3>
+      <p>登録しているフィードにレートを設定する。</p>
+      <div class="parameters">
+    [
+      {"name" : "subscribe_id", "data_type" : "number"},
+      {"name" : "rate", "data_type" : "number"}
+    ]
+      </div>
+    </article>
+    <article class="api">
+      <h3>/api/folder/create</h3>
+      <p>フォルダを作成する。</p>
+      <div class="parameters">
+    [
+      {"name" : "name", "data_type" : "string"}
+    ]
+      </div>
+    </article>
+    <article class="api">
+      <h3>/api/pin/all</h3>
+      <p>ピンをつけた記事を取得する。</p>
+      <div class="parameters">
+    [
+    ]
+      </div>
+    </article>
+    <article class="api">
+      <h3>/api/pin/add</h3>
+      <p>ピンをつける</p>
+      <div class="parameters">
+    [
+    {"name" : "link", "data_type" : "string", "description": ""},
+    {"name" : "title", "data_type" : "string", "description": ""}
+    ]
+      </div>
+    </article>
+    <article class="api">
+      <h3>/api/pin/remove</h3>
+      <p>ピンをつける</p>
+      <div class="parameters">
+    [
+    {"name" : "link", "data_type" : "string", "description": ""}
+    ]
+      </div>
+    </article>
+    <article class="api">
+      <h3>/api/pin/clear</h3>
+      <p>ピンをつけたすべての記事を消去</p>
+      <div class="parameters">
+    [
+    ]
+      </div>
+    </article>
+  </div>
+  <script id="tpl" type="text/html">
+    <form method="post" name="apiForm">
+      <table class="table table-striped">
+        <thead>
+          <tr><th>Parameter</th><th>Value</th><th>Data Type</th><th>Description</th></tr>
+        </thead>
+        <tbody>
+          {{#params}}
+          <tr><td>{{name}}</td><td><input name="{{name}}" value="{{value}}"/></td><td>{{data_type}}</td><td>{{description}}</td></tr>
+          {{/params}}
+        </tbody>
+      </table>
+      <input type="button" value="post" name="post" class="btn btn-primary"/>
+    </form>
+    <div class="result"></div>
+  </script>
+</body>
+</html>
